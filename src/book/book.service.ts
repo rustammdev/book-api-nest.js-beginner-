@@ -37,7 +37,8 @@ export class BookService {
     return book
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  remove(id: string) {
+    const book = books.filter((book:book) => book.id.toString() !== id)
+    return book
   }
 }

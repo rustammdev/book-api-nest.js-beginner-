@@ -20,4 +20,9 @@ export class BookController {
     console.log(newBook)
     return this.bookService.update(id, newBook)
   }
+
+  @Delete(':id')
+  removeBook(@Param('id') id: string){
+    return this.bookService.remove(id)
+  }
 }
