@@ -1,4 +1,4 @@
-import { books} from './fake.database';
+import { book, books} from './fake.database';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -7,12 +7,34 @@ export class BookService {
     return books;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} book`;
+  findOne(id: string) {
+    const book = books.find((book: book) => book.id.toString() == id)
+    return book 
   }
 
-  update(id: number) {
-    return `This action updates a #${id} book`;
+  update(id: string, newBook: book) : book[] | undefined | object {
+    const isExist : book | any = books.find((book: book) => book.id.toString() === id)
+    if(!isExist){
+      return {
+        message : "Malumotlar mavjud emas"
+      }
+    }
+    newBook = {  
+      id : newBook.id ?? isExist.id,
+     title : newBook.title ?? isExist.title,
+     author : newBook.author ?? isExist.author,
+     description : newBook.description ?? isExist.description
+    }
+
+    const book = books.map((book: book) => {
+      if(book.id.toString() === id){
+        return newBook
+      }else{
+        return book
+      }
+    })
+
+    return book
   }
 
   remove(id: number) {
